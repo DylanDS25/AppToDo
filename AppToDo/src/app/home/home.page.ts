@@ -10,6 +10,7 @@ import { AlertController, IonItemSliding } from '@ionic/angular';
 })
 export class HomePage {
 
+  isToastOpen = false;
   task: ITask = {
     id: 0,
     title: '',
@@ -36,24 +37,22 @@ export class HomePage {
       }, {
         text: 'Agregar',
         handler: (data) => {
-          if (data.title != ""){
-            this.tasks.push({
-              id: this.tasks.length + 1,
-              title: data.title,
-              done: false
-            })
-          } else {
-            alert.message = "El campo no puede estar vacio";
-            return false;
+          if (data.title.trim() === '') {
+            this.isToastOpen = true;
+            return;
           }
-          return true;
+          this.tasks.push({
+            id: this.tasks.length + 1,
+            title: data.title,
+            done: false
+          });
         }
       }]
     });
     await alert.present();
   }
 
-  toggleTaksDone(task: ITask, slidingItem: IonItemSliding){
+  toggleTaksDone(task: ITask, slidingItem: IonItemSliding) {
     task.done = !task.done
     slidingItem.close();
   }
@@ -80,13 +79,19 @@ export class HomePage {
       }, {
         text: 'Actualizar',
         handler: (data) => {
-          this.tasks [this.tasks.indexOf(task)].title = data.title;
+          if (data.title.trim() === '') {
+            this.isToastOpen = true;
+            return;
+          }
+          this.tasks[this.tasks.indexOf(task)].title = data.title;
         }
       }]
     });
     await alert.present();
   }
+
+  setOpen(isOpen: boolean) {
+    this.isToastOpen = isOpen;
+  }
+
 }
-
-
-//51.47 decoracion

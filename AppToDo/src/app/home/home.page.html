@@ -13,7 +13,7 @@
           <ion-label [ngClass]="item.done ? 'task-done' : ''">{{item.title}}</ion-label>
         </ion-item>
       <ion-item-options>
-        <ion-item-option (clcik)="toggleTaksDone(item,slidingItem)" color="success"><ion-icon name="trophy-outline"></ion-icon></ion-item-option>
+        <ion-item-option (click)="toggleTaksDone(item,slidingItem)" color="success"><ion-icon name="trophy-outline"></ion-icon></ion-item-option>
         <ion-item-option (click)="deleteTask(item)" color="danger" ><ion-icon name="trash-bin-outline"></ion-icon></ion-item-option>
       </ion-item-options>
     </ion-item-sliding>
@@ -24,8 +24,15 @@
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-</ion-content>
 
-<!-- 
-- compilar en apk 
--->
+  <ion-toast
+  trigger="open-toast"
+  [isOpen]="isToastOpen"
+  [duration]="5000"
+  (DidDismiss)="setOpen(false)"
+  message="El campo no puede estar vacio"
+  class="my-custom-toast"
+  icon="warning"
+  color="tertiary"
+></ion-toast>
+</ion-content>
